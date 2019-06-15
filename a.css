@@ -1,11 +1,20 @@
 body {
-    background-color: black;
-    color: white;
-    margin:0;
+    background-color: #EFEFEFEF;
+    color: black;
+    margin:0;/*默认8px*/
 }
 a {
-    color: inherit;
+    color: inherit;/*继承父级颜色样式，a元素自带颜色样式，*/
     text-decoration: none; /*去掉下划线*/
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+hr{
+    height: 0;
+    border: none;
+    border-top: 1px solid #DEDEDE;/*br元素默认就是border 1px*/
 }
 .clearfix::after{
     content: '';
@@ -13,29 +22,32 @@ a {
     clear: both;
 }
 .topNavBar {
-    padding-top: 20px;
-    padding-bottom: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
-    /*padding: 20px 16px 20px 16px;*/
+padding: 20px 0px 20px 0px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
-.topNavBar > a {
+.topNavBar-inner {
+    padding: 0 16px;
+}
+.topNavBar a {
     float: left;
 }
-.topNavBar > nav {
+.topNavBar nav {
     float: right;
 }
-.topNavBar > nav > ul {
-    list-style: none;
+.topNavBar nav > ul {
+    list-style: none;/*把点去掉*/
     margin: 0;
     padding: 0;
 }
-.topNavBar > nav > ul > li {
+.topNavBar nav > ul > li {
     float: left;
     margin-left: 17px;
     margin-right: 17px;
 }
-.topNavBar > nav > ul > li > a {
+.topNavBar nav > ul > li > a {
     font-size: 12px;
     color: #B7B7B7;
     text-decoration: none;
@@ -46,7 +58,7 @@ a {
     padding-bottom:5px;
     display: block;
 }
-.topNavBar > nav > ul >li > a:hover{
+.topNavBar nav > ul >li > a:hover{
     border-bottom: 3px solid red;
 }
 
@@ -61,4 +73,100 @@ a {
 }
 .topNavBar .logo .card{
     color: #9A9DA2;
+}
+
+.banner {
+    background-image: url(./img/rs-cover.jpg); 
+    height: 515px;
+    background-position: center center;
+    background-size: cover;/*盖住全部面积，再按比例缩放*/
+}
+.banner .mask{
+    height: 515px;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.userCard{
+    border: 1px solid red;
+    max-width: 940px;/*视窗变窄时会自适应，width不会自适应*/
+    margin-left: auto;
+    margin-right: auto;
+    backgroUnd-color: #FFFFFF;
+}
+.userCard .picture{
+    float: left;
+}
+.userCard .text{
+    float: left;
+    padding-left: 65px;
+    width: 470px;
+}
+.userCard .text h1 {
+    margin-top: 18px;
+}
+.userCard .text hr {
+    margin: 20px 0;
+}
+.userCard .welcome{
+    background: #E6686A;
+    color: white;
+    display: inline-block;/*span默认不接受宽高*/
+    padding: 4px 16px;
+    line-height: 22px;/*没加之前，不同机器高度可能显示不一*/
+    position: relative;
+    margin-bottom: 10px;
+    /* width: 70px;写宽高容易有bug，加字会不显示  */
+    /* height: 29px; */
+    /* line-height: 29px;行高等于height，span垂直居中，但容易有bug */
+    /* text-align: center; */
+}
+.userCard .welcome .triangle{
+    display: block;
+    border: 10px solid transparent;
+    width: 0px;
+    border-left-color: #E6686A;
+    border-top-width: 0px;
+    position: absolute;/*脱离文档路，相对于父级第一个relative定位*/
+    left: 4px;
+    top: 100%;/*三角形高度距离hello左上角的百分之百*/
+}
+.userCard .pictureAndText {
+    padding: 50px;
+}
+.userCard dl dt,
+.userCard dl dd{
+    float: left;
+    padding: 5px 0;
+}
+.userCard dl dt{
+    width: 30%;
+    font-weight: bold;
+}
+.userCard dl dd{
+    width: 70%;
+    color: #9DA0A7;
+}
+
+.userCard > footer.media{/*.前后没有空格*/
+    background: #E6686A;
+    text-align: center;
+}
+.userCard > footer.media > a{
+    /* border: 1px solid black;调试用 */
+    display: inline-block;/*使被边框包住*/
+    width: 40px;
+    /* height: 40px;高度会导致图标不垂直居中，改用padding */
+    line-height:30px;
+    padding: 5px 0;
+    border-radius: 50%;
+    margin: 16px;
+}
+.userCard > footer.media > a:hover{
+    background: #CF5D5F;
+}
+.userCard svg{
+    width: 30px;
+    height: 30px;
+    fill: white;
+    vertical-align: top;/*解决不垂直居中*/
 }
