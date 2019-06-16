@@ -16,6 +16,13 @@ hr{
     border: none;
     border-top: 1px solid #DEDEDE;/*br元素默认就是border 1px*/
 }
+ul,
+ol {
+    list-style: none;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;/*bold加粗，normal正常*/
+}
 .clearfix::after{
     content: '';
     display: block;
@@ -87,11 +94,11 @@ padding: 20px 0px 20px 0px;
 }
 
 .userCard{
-    border: 1px solid red;
     max-width: 940px;/*视窗变窄时会自适应，width不会自适应*/
     margin-left: auto;
     margin-right: auto;
     backgroUnd-color: #FFFFFF;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
 }
 .userCard .picture{
     float: left;
@@ -169,4 +176,138 @@ padding: 20px 0px 20px 0px;
     height: 30px;
     fill: white;
     vertical-align: top;/*解决不垂直居中*/
+}
+body > main {
+    margin-top: -340px;
+}
+body > main .downloadResume-wrapper {
+    text-align: center;
+}
+body > main .downloadResume {
+    font-size: 14px;
+    line-height: 16px;
+    padding: 21px 55px;
+    display: inline-block;
+    border: 1px solid #CDCFD1;
+    border-radius:  2px;
+    color: #3d4451;
+    font-weight: bold;/*加粗*/
+    margin: 32px 0;
+    transition: box-shadow 0.3s;/*阴影转换时间*/
+}
+body > main .downloadResume:hover {
+    box-shadow: 0px 4px 13px 0px rgba(0,0,0,0.2);
+}
+.selfIntroduction {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-family: Kai;
+    line-height: 1.8;
+    font-size: 18px;
+}
+section.skills,
+section.portfolio {
+    max-width: 940px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 60px; 
+}
+section.skills > h2,
+section.portfolio > h2 {
+    text-align: center;
+    color: #3d4451;
+    font-size: 34px;
+    line-height:1.2;
+    font-weight: 600;
+}
+section.skills h3 {
+    font-size: 14px;
+    line-height: 1.1;
+    padding-right: 40px;
+}
+section.skills > ol {
+    backgroUnd-color: #FFFFFF;
+    box-shadow: 0px 1px 5px 0px rgba(0,0,0,0.5);
+    padding: 42px 50px 10px;
+    margin-top: 30px;
+}
+section.skills > ol > li {
+    float: left;
+    width: 48%;
+    box-sizing: border-box;/*加这句话宽度就是整体50%，包括padding*/
+    /* padding-right: 40px;有了even，这句可以去掉 */
+}
+section.skills > ol > li:nth-child(even) { /*even偶数，odd单数*/
+    float: right;
+}
+section.skills .progressBar {
+    height: 5px;
+    background: #fae1e1;
+    border-radius: 2px;
+    margin: 4px 0 40px;
+}
+section.skills .progressBar .progress {
+    height: 100%;
+    background: #e6686a;
+    width: 70%;
+    border-radius: 2px;
+}
+section.portfolio {
+    text-align: center;
+    margin-bottom: 100px; 
+}
+section.portfolio > nav {
+    text-align: center;
+    display: inline-block; /*为了让section.portfolio > nav .bar宽度收缩*/
+    vertical-align: top;
+    margin-top: 32px;
+}
+section.portfolio > nav > ol {
+    margin: 0 auto;
+    display: inline-block;
+    vertical-align: top; /*w为了解决inline-block下面多一个空隙的bug*/
+}
+section.portfolio > nav > ol > li {
+    float: left;
+    margin-left: 40px;
+    cursor: pointer; /*手型*/
+}
+section.portfolio > nav > ol > li:nth-child(1) {
+    margin-left: 0;
+}
+section.portfolio > nav .bar {
+    height: 5px;
+    background: white;
+    border-radius: 2px;
+    margin-top: 5px;
+    margin-bottom: 28px;
+}
+section.portfolio > nav .bar-inner {
+    height: 100%;
+    background: #e6686a;
+    border-radius: 2px;
+    transition: all 0.3s; /*过度*/
+}
+section.portfolio > nav .bar.state-1 .bar-inner {
+    margin-left: 0;
+    width: 50px;
+}
+section.portfolio > nav .bar.state-2 .bar-inner {
+    margin-left: 65px;
+    width: 50px;
+}
+section.portfolio > nav .bar.state-3 .bar-inner {
+    margin-left: 140px;
+    width: 100px;
+}
+section.portfolio .works {
+    position: relative;
+}
+section.portfolio .works > .big {
+    position: absolute;
+}
+section.portfolio .works > .small {
+    position: absolute;
 }
