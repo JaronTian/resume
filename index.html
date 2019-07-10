@@ -12,20 +12,85 @@
          fill: currentColor;
          overflow: hidden;
       }
+      .site-welcome{
+        display: none;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0; 
+        left: 0; 
+        width: 100%; /*视窗的100%*/
+        height: 100%; /*视窗的100%*/
+        background: #888;
+        z-index: 1; /*堆叠顺序*/
+      }
+      .active.site-welcome{ /*同属于2个类，不分先后，如果2个代码块类名字一样则执行下面的代码块*/
+        display: flex;
+      }
+      .loading{
+        width: 200px;
+        height: 200px;
+        position: relative;
+        
+      }
+      .loading::before,
+      .loading::after {
+        content: "";
+        position: absolute;
+        width: 0px;
+        height:0px;
+        background: black;
+        border-radius: 50%;
+        top: 0px;
+        left: 0px;
+        bottom: 0px;
+        right: 0px;
+        margin: auto;
+        animation: s 1.5s linear infinite;
+      }
+      .loading::after{
+        animation-delay: 0.75s;
+      }
+      @keyframes s{
+        0%{
+          width:0; height: 0; opacity: 1;
+        }
+        100%{
+          width:100px; height: 100px; opacity: 0;
+        }
+      }
   </style>
   </head>
   <body>
-    <div class="topNavBar">
+    <div id="sitWelcome" class="site-welcome active">
+      <div class="loading">
+      </div>
+    </div>
+    <div id="topNavBar" class="topNavBar">
       <div class="topNavBar-inner clearfix">
         <a class="logo" href="#" alt="logo">
           <span class="rs">RS</span><span class="card">card</span><!--若回车，span之间有空格-->
         </a>
-        <nav>
+        <nav class="menu">
           <ul class="clearfix">
-            <li><a href="#">关于</a></li>
-            <li><a href="#">技能</a></li>
-            <li><a href="#">作品</a></li>
-            <li><a href="#">博客</a></li>
+            <li><a href="#siteAbout">关于</a></li>
+            <li><a href="#siteSkills">技能</a></li>
+            <li>
+              <a href="#siteWorks">作品</a>
+              <ul class="submenu">
+                <li>作品1</li>
+                <li>作品2</li>
+                <li>作品3</li>
+              </ul>
+            </li>
+            <li>
+              <a href="#">博客</a>
+              <ul class="submenu">
+                <li>博客1</li>
+                <li>博客2</li>
+                <li>博客3</li>
+              </ul>
+            </li>
             <li><a href="#">日历</a></li>
             <li><a href="#">联系方式</a></li>
             <li><a href="#">其他</a></li>
@@ -37,7 +102,7 @@
       <div class="mask"></div><!--灰色阴影-->
     </div>
     <main>
-      <div class="userCard">
+      <div id="siteAbout" class="userCard">
         <div class="pictureAndText clearfix">
           <div class="picture">
             <img src="./img/avatar.jpg" alt="头像" width=299 height=347>
@@ -103,7 +168,7 @@
       </p>
 
     </main>
-    <section class="skills">
+    <section id="siteSkills" class="skills">
       <h2>技能</h2>
       <ol class="clearfix">
         <li>
@@ -150,7 +215,7 @@
         </li>
       </ol>
     </section>
-    <section class="portfolio">
+    <section id="siteWorks" class="portfolio">
       <h2>作品集</h2>
       <nav>
         <ol class="clearfix">
@@ -186,5 +251,40 @@
       </div>
 
     </section>
+    <script>
+      setTimeout(function(){
+        sitWelcome.classList.remove('active')
+        
+      },1000)
+       window.onscroll = function(){
+          if(window.scrollY > 0){
+            topNavBar.classList.add('sticky')
+          }
+          else{
+            topNavBar.classList.remove('sticky')
+          }
+        }
+        let liTags = document.querySelectorAll('nav.menu > ul > li') // 获取所有元素
+        for(let i=0; i<liTags.length; i++){
+          liTags[i].onmouseenter = function(x){
+            x.currentTarget.classList.add('active')
+          }
+          liTags[i].onmouseleave = function(x){
+            x.currentTarget.classList.remove('active')
+          }
+        }
+        let aTags = document.querySelectorAll('nav.menu > ul > li > a')
+        for(let i=0; i<aTags.length; i++){
+          aTags[i].onclick = function(x){
+            x.preventDefault()
+            let a = x.currentTarget
+            let href = a.getAttribute('href') // '#siteAbout',获取原文不然会被浏览器加协议
+            let element = document.querySelector(href) //返回匹配指定选择器的第一个元素
+            let top = element.offsetTop //获取元素距离页面顶部的像素数
+            console.log(element.offsetTop)
+            window.scrollTo(0,top - 80) //scrollTo() 方法可把内容滚动到指定的坐标。
+          }
+        }
+    </script>
   </body>
 </html>

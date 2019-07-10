@@ -34,6 +34,15 @@ padding: 20px 0px 20px 0px;
     top: 0;
     left: 0;
     width: 100%;
+    transition: all 0.5s;
+    color: #B7B7B7;
+}
+.topNavBar.sticky{
+    background:white;
+    padding: 10px 0;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    color: black;
 }
 .topNavBar-inner {
     padding: 0 16px;
@@ -53,10 +62,10 @@ padding: 20px 0px 20px 0px;
     float: left;
     margin-left: 17px;
     margin-right: 17px;
+    position: relative;
 }
 .topNavBar nav > ul > li > a {
     font-size: 12px;
-    color: #B7B7B7;
     text-decoration: none;
     font-weight: bold;/*加粗*/
     border-top: 3px solid transparent;
@@ -64,11 +73,54 @@ padding: 20px 0px 20px 0px;
     padding-top: 5px;
     padding-bottom:5px;
     display: block;
+    position: relative;
 }
-.topNavBar nav > ul >li > a:hover{
-    border-bottom: 3px solid red;
+/*.topNavBar nav > ul >li > a:hover{  可用border实现下面一条线
+     border-bottom: 3px solid red; 
+}*/
+.topNavBar nav > ul >li.active > a::after{
+    content: ''; /*没有这句 after 不显示*/
+    display: ruby; /*注释形式*/
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: red;
+    height: 2px;
+    animation: menuSlide 0.3s;
 }
-
+@keyframes menuSlide{
+    0%{
+        width:0;
+    }
+    100%{
+        width:100%;
+    }
+}
+.topNavBar .submenu{
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;;
+    background:white;
+    color: #3d4451;
+}
+.topNavBar li.active > .submenu{
+    display: block;
+    animation: submenuSlide .3s;
+}
+@keyframes submenuSlide{
+    0%{
+        margin-right: 100%;
+    }
+    100%{
+        margin-right: 0;
+    }
+}
+.topNavBar .submenu > li{
+    white-space: nowrap; /*别换行*/
+    padding: 5px 10px;
+}
 
 .topNavBar .logo{
     font-family: "Arial Black";
