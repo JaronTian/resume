@@ -251,6 +251,7 @@
       </div>
 
     </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
     <script>
       setTimeout(function(){
         sitWelcome.classList.remove('active')
@@ -273,16 +274,37 @@
             x.currentTarget.classList.remove('active')
           }
         }
+
         let aTags = document.querySelectorAll('nav.menu > ul > li > a')
+        function animate(time) { //缓动
+              requestAnimationFrame(animate);
+              TWEEN.update(time);
+            }
+            requestAnimationFrame(animate);
         for(let i=0; i<aTags.length; i++){
           aTags[i].onclick = function(x){
             x.preventDefault()
-            let a = x.currentTarget
+            let a = x.currentTarget // 获取被点击的元素
             let href = a.getAttribute('href') // '#siteAbout',获取原文不然会被浏览器加协议
             let element = document.querySelector(href) //返回匹配指定选择器的第一个元素
             let top = element.offsetTop //获取元素距离页面顶部的像素数
-            console.log(element.offsetTop)
-            window.scrollTo(0,top - 80) //scrollTo() 方法可把内容滚动到指定的坐标。
+            //let top = dooument.querySelector(x.currentTarget.getAttribute('href')).offsetTop
+            
+            
+            let currentTop = window.scrollY //当前高度
+            let targetTop = top - 80 // 目标高度
+            let s = targetTop-currentTop
+
+            var coords = {y: currentTop }; // 开始位置
+            var t = Math.abs(s/100)*300
+            if(t>500){ t = 500 }
+            var tween = new TWEEN.Tween(coords)
+              .to({y: targetTop}, t) //目标位置
+              .easing(TWEEN.Easing.Quadratic.InOut)
+              .onUpdate(() => { 
+                window.scrollTo(0,coords.y) //把内容滚动到指定的坐标。调用函数生成缓动的中间位置
+              })
+              .start();
           }
         }
     </script>
