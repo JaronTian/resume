@@ -62,7 +62,7 @@
   </style>
   </head>
   <body>
-    <div id="sitWelcome" class="site-welcome active">
+    <div id="sitWelcome" class="site-welcome active"> <!--加载动画-->
       <div class="loading">
       </div>
     </div>
@@ -102,7 +102,7 @@
       <div class="mask"></div><!--灰色阴影-->
     </div>
     <main>
-      <div id="siteAbout" class="userCard">
+      <div data-x id="siteAbout" class="userCard"> <!--data-x是一个标记-->
         <div class="pictureAndText clearfix">
           <div class="picture">
             <img src="./img/avatar.jpg" alt="头像" width=299 height=347>
@@ -168,7 +168,7 @@
       </p>
 
     </main>
-    <section id="siteSkills" class="skills">
+    <section data-x id="siteSkills" class="skills">
       <h2>技能</h2>
       <ol class="clearfix">
         <li>
@@ -215,7 +215,7 @@
         </li>
       </ol>
     </section>
-    <section id="siteWorks" class="portfolio">
+    <section data-x id="siteWorks" class="portfolio">
       <h2>作品集</h2>
       <nav>
         <ol class="clearfix">
@@ -253,60 +253,96 @@
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
     <script>
-      setTimeout(function(){
+      setTimeout(function(){ // 加载动画延时，不然看不到动画
         sitWelcome.classList.remove('active')
         
-      },1000)
-       window.onscroll = function(){
-          if(window.scrollY > 0){
-            topNavBar.classList.add('sticky')
-          }
-          else{
-            topNavBar.classList.remove('sticky')
+      },1000) // 1s
+      let specialTags = document.querySelectorAll('[data-x]')
+      for(let i=0; i<specialTags.length; i++){
+        specialTags[i].classList.add('offset')
+      }
+      //findClosest() // 先执行一次，不然一开始没有从下往上的效果
+      setTimeout(function(){ //延时
+        findClosest()
+      }, 1000)
+      window.onscroll = function(){
+        if(window.scrollY > 0){
+          topNavBar.classList.add('sticky')
+        }
+        else{
+          topNavBar.classList.remove('sticky')  
+        }
+        findClosest()
+      }
+      function findClosest(){
+        //找离窗口顶部最近的元素
+        let specialTags = document.querySelectorAll('[data-x]')
+        let minIndex = 0
+        for(let i = 1; i < specialTags.length; i++){
+          if(Math.abs(specialTags[i].offsetTop - window.scrollY) < Math.abs(specialTags[minIndex].offsetTop - window.scrollY)){
+            minIndex = i
           }
         }
-        let liTags = document.querySelectorAll('nav.menu > ul > li') // 获取所有元素
-        for(let i=0; i<liTags.length; i++){
-          liTags[i].onmouseenter = function(x){
-            x.currentTarget.classList.add('active')
-          }
-          liTags[i].onmouseleave = function(x){
-            x.currentTarget.classList.remove('active')
-          }
+        specialTags[minIndex].classList.remove('offset')
+        //给离窗口顶部最近的元素加 highlight
+        for(let i=0; i<specialTags.length; i++){
+          specialTags[i].classList.remove('highlight')
         }
+        specialTags[minIndex].classList.add('highlight')
+        //给离窗口顶部最近的元素对应的导航 li 加 highlight
+        let id = specialTags[minIndex].id
+        let a = document.querySelector('a[href="#' + id + '"]')
+        let li = a.parentNode
+        let brothersAndMe = li.parentNode.children
+        for(let i=0; i<brothersAndMe.length; i++){
+          brothersAndMe[i].classList.remove('highlight')
+        }
+        li.classList.add('highlight')
+      }
+      
 
-        let aTags = document.querySelectorAll('nav.menu > ul > li > a')
-        function animate(time) { //缓动
-              requestAnimationFrame(animate);
-              TWEEN.update(time);
-            }
+      let liTags = document.querySelectorAll('nav.menu > ul > li') // 获取所有元素
+      for(let i=0; i<liTags.length; i++){
+        liTags[i].onmouseenter = function(x){
+          x.currentTarget.classList.add('active')
+        }
+        liTags[i].onmouseleave = function(x){
+          x.currentTarget.classList.remove('active')
+        }
+      }
+
+      let aTags = document.querySelectorAll('nav.menu > ul > li > a')
+      function animate(time) { //缓动
             requestAnimationFrame(animate);
-        for(let i=0; i<aTags.length; i++){
-          aTags[i].onclick = function(x){
-            x.preventDefault()
-            let a = x.currentTarget // 获取被点击的元素
-            let href = a.getAttribute('href') // '#siteAbout',获取原文不然会被浏览器加协议
-            let element = document.querySelector(href) //返回匹配指定选择器的第一个元素
-            let top = element.offsetTop //获取元素距离页面顶部的像素数
-            //let top = dooument.querySelector(x.currentTarget.getAttribute('href')).offsetTop
-            
-            
-            let currentTop = window.scrollY //当前高度
-            let targetTop = top - 80 // 目标高度
-            let s = targetTop-currentTop
-
-            var coords = {y: currentTop }; // 开始位置
-            var t = Math.abs(s/100)*300
-            if(t>500){ t = 500 }
-            var tween = new TWEEN.Tween(coords)
-              .to({y: targetTop}, t) //目标位置
-              .easing(TWEEN.Easing.Quadratic.InOut)
-              .onUpdate(() => { 
-                window.scrollTo(0,coords.y) //把内容滚动到指定的坐标。调用函数生成缓动的中间位置
-              })
-              .start();
+            TWEEN.update(time);
           }
+          requestAnimationFrame(animate);
+      for(let i=0; i<aTags.length; i++){
+        aTags[i].onclick = function(x){
+          x.preventDefault()
+          let a = x.currentTarget // 获取被点击的元素
+          let href = a.getAttribute('href') // '#siteAbout',获取原文不然会被浏览器加协议
+          let element = document.querySelector(href) //返回匹配指定选择器的第一个元素
+          let top = element.offsetTop //获取元素距离页面顶部的像素数
+          //let top = dooument.querySelector(x.currentTarget.getAttribute('href')).offsetTop
+          
+          
+          let currentTop = window.scrollY //当前高度
+          let targetTop = top - 80 // 目标高度
+          let s = targetTop-currentTop
+
+          var coords = {y: currentTop }; // 开始位置
+          var t = Math.abs(s/100)*300
+          if(t>500){ t = 500 }
+          var tween = new TWEEN.Tween(coords)
+            .to({y: targetTop}, t) //目标位置
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => { 
+              window.scrollTo(0,coords.y) //把内容滚动到指定的坐标。调用函数生成缓动的中间位置
+            })
+            .start();
         }
+      }
     </script>
   </body>
 </html>

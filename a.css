@@ -1,3 +1,4 @@
+
 body {
     background-color: #EFEFEFEF;
     color: black;
@@ -27,6 +28,16 @@ h1,h2,h3,h4,h5,h6 {
     content: '';
     display: block;
     clear: both;
+}
+[data-x].highlight{ 
+    border: 3px solid red;
+}
+[data-x].offset{
+    transform: translateY(100px);
+}
+[data-x]{
+    transform: translateY(0);
+    transition: all 0.5s;
 }
 .topNavBar {
 padding: 20px 0px 20px 0px;
@@ -78,7 +89,8 @@ padding: 20px 0px 20px 0px;
 /*.topNavBar nav > ul >li > a:hover{  可用border实现下面一条线
      border-bottom: 3px solid red; 
 }*/
-.topNavBar nav > ul >li.active > a::after{
+.topNavBar nav > ul >li.active > a::after,
+.topNavBar nav > ul >li.highlight > a::after{
     content: ''; /*没有这句 after 不显示*/
     display: ruby; /*注释形式*/
     position: absolute;
@@ -299,12 +311,18 @@ section.skills .progressBar {
     background: #fae1e1;
     border-radius: 2px;
     margin: 4px 0 40px;
+    overflow: hidden; 
 }
 section.skills .progressBar .progress {
     height: 100%;
     background: #e6686a;
     width: 70%;
     border-radius: 2px;
+    transform: translateX(0);
+    transition: all 1s;
+}
+section.skills.offset .progress {
+    transform: translateX(-100%);
 }
 section.portfolio {
     text-align: center;
