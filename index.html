@@ -251,7 +251,7 @@
       </div>
 
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/17.4.0/Tween.min.js"></script><!--缓动库-->
     <script>
       setTimeout(function(){ // 加载动画延时，不然看不到动画
         sitWelcome.classList.remove('active')
@@ -329,18 +329,18 @@
           
           let currentTop = window.scrollY //当前高度
           let targetTop = top - 80 // 目标高度
-          let s = targetTop-currentTop
+          let s = targetTop-currentTop // 路程
 
           var coords = {y: currentTop }; // 开始位置
-          var t = Math.abs(s/100)*300
+          var t = Math.abs(s/100)*300 // 时间
           if(t>500){ t = 500 }
           var tween = new TWEEN.Tween(coords)
             .to({y: targetTop}, t) //目标位置
-            .easing(TWEEN.Easing.Quadratic.InOut)
+            .easing(TWEEN.Easing.Quadratic.InOut) // 缓动类型
             .onUpdate(() => { 
               window.scrollTo(0,coords.y) //把内容滚动到指定的坐标。调用函数生成缓动的中间位置
             })
-            .start();
+            .start(); // 开始缓动
         }
       }
     </script>
