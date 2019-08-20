@@ -32,10 +32,11 @@ h1,h2,h3,h4,h5,h6 {
 [data-x].highlight{ 
     /* border: 1px solid red; */
 }
-[data-x].offset{
+[data-x].offset{ /*往下100px*/
     transform: translateY(100px);
+    transition: all 0s;
 }
-[data-x]{
+[data-x]{ /*没有 offset 就恢复原位*/
     transform: translateY(0);
     transition: all 0.5s;
 }
