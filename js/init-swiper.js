@@ -26,7 +26,7 @@
 // }.call()
 
 !function(){
-  var view = document.querySelector('#mySlides')
+  var view = View('#mySlides')
   var controller = {
     view: null,
     swiper: null,

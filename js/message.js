@@ -58,42 +58,15 @@
 // })
 
 !function(){
-  var view = document.querySelector('section.message') // V 只负责看得见的东西
+  var view = View('section.message') // V 只负责看得见的东西
 
-  var model = { // M 只负责跟数据相关的操作
-    init: function(){ // 初始化
-      var APP_ID = 'xiq5lRgBGzFzh91gpwf9NzbM-9Nh9j0Va';
-      var APP_KEY = 'wMbB0ijtXYFr7DHTvz3dMRza';
-      AV.init({ appId: APP_ID, appKey: APP_KEY });
-    },
-    fetch: function(){ // 获取数据
-      var query = new AV.Query('Message');
-      return query.find() // Promise 对象
-    },
-    save: function(name, content){ // 创建数据
-      var Message = AV.Object.extend('Message');
-      var message = new Message();
-      message.set({
-        'name': name,
-        'content': content
-      });
-      return message.save()
-    }
-  }
+  var model = Model({resourceName: 'Message'})
 
-  var controller = { // C 负责组合
-    view: null,
-    model: null,
-    massageList: null,
-    form: null,
-    init: function(view, model){
-      this.view = view
-      this.model = model
+  var controller = Controller({
+    init: function(view, controller){
       this.messageList = view.querySelector('#messageList')
       this.form = view.querySelector('form')
-      this.model.init()
       this.loadMessages()
-      this.bindEvents()
     },
     loadMessages: function(){
       this.model.fetch()
@@ -123,7 +96,9 @@
       let myForm = this.form
       let content = myForm.querySelector('input[name=content]').value
       let name = myForm.querySelector('input[name=name]').value
-      this.model.save(name, content).then(function (Object) { // 如果保存成功则
+      this.model.save({
+        'name': name, 'content':  content
+      }).then(function (Object) { // 如果保存成功则
         let li = document.createElement('li')
         li.innerText = `${Object.attributes.name}: ${Object.attributes.content}`
         let messageList = document.querySelector('#messageList')
@@ -132,6 +107,6 @@
         console.log(Object)
       })
     }
-  }
+  })
   controller.init(view, model)
 }.call()

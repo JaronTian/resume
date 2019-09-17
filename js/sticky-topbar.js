@@ -13,7 +13,7 @@
 //   controller.call(null,view) // contorller(view)
 // }.call()
 !function(){
-  var view = document.querySelector('#topNavBar')
+  var view = View('#topNavBar')
   var controller = {
     view: null,
     init: function(view){
